@@ -40,7 +40,8 @@ class CategoryScreen extends React.Component {
         firebase.database().ref('category/').push().set({
           name: this.state.catName,
           desc: this.state.catDesc,
-          url: url
+          url: url,
+          imageName:status.metadata.name
         })
         this.resetData()
       })
@@ -56,7 +57,8 @@ class CategoryScreen extends React.Component {
           name: child.val().name,
           desc: child.val().desc,
           url: child.val().url,
-          key: child.key
+          key: child.key,
+          imageName: child.val().imageName,
         })
       });
       this.setState({
@@ -70,6 +72,31 @@ class CategoryScreen extends React.Component {
     this.setState({catDesc: ""})
     this.setState({catImgUrl: null})
   }
+  /*
+  Update 
+  handleUpdate() {
+    var updates = {};
+    updates['/id'] = 1;
+    updates['/title'] = 'Apple';
+
+    return firebase.database().ref('items').child('ITEM_KEY').update(updates);
+  }
+  */
+  deleteRow = (key, imgName) => {
+    console.log(key)
+    firebase.database().ref('category').child('' + key).remove().then(() => {
+      firebase.storage().ref('category').child('' + imgName).delete().then(() => {
+        console.log(" Remove successfull.")
+      })
+      .catch((error) => {
+        console.log("Remove failed: " + error.message)
+      });
+    })
+    .catch((error) => {
+      console.log("Remove failed: " + error.message)
+    });
+
+  }
   render() {
     const { colors } = this.context;
     const mylist = this.state.data.map(item=>{
@@ -82,7 +109,7 @@ class CategoryScreen extends React.Component {
           right={props => 
             <View style={{gap:5}}>
               <TouchableOpacity><Avatar.Icon size={25} color={'#fff'} icon={"lead-pencil"} /></TouchableOpacity>
-              <TouchableOpacity><Avatar.Icon size={25} color={'#fff'} icon={"delete"} /></TouchableOpacity>
+              <TouchableOpacity onPress={() => this.deleteRow(item.key, item.imageName)}><Avatar.Icon size={25} color={'#fff'} icon={"delete"} /></TouchableOpacity>
             </View>
             }
           style={{borderBottomWidth: 1,borderBottomColor: '#cfcfcf'}}
