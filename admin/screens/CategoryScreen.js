@@ -96,11 +96,11 @@ class CategoryScreen extends React.Component {
         console.log(" Remove successfull.")
       })
       .catch((error) => {
-        console.log("Remove failed: " + error.message)
+        console.log("Remove failed : " + error.message)
       });
     })
     .catch((error) => {
-      console.log("Remove failed: " + error.message)
+      console.log("Remove failed : " + error.message)
     });
 
   }
