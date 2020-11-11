@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import Header from '../../components/Header'
-import {TextInput, Button, List, Avatar} from 'react-native-paper'
+import {TextInput, Button, List, Avatar, Paragraph, Dialog, Portal} from 'react-native-paper'
 import ImagePickerExample from '../CustomImagePicker'
 import{ ThemeContext } from '../../components/Context';
 import storage from '@react-native-firebase/storage';
@@ -17,6 +17,8 @@ class CategoryScreen extends React.Component {
     catDesc: "",
     catImgUrl: null,
     data:[],
+    listLoader:true,
+    addCatLoader:false,
   }
   
   setFoodImage = (uri) => {
@@ -30,6 +32,7 @@ class CategoryScreen extends React.Component {
     });
   }
   uploadImage = async() => {
+    this.setState({addCatLoader:true})
     const image = this.state.catImgUrl
     //const user = this.getCurrentUser();
     const refImage = firebase.storage().ref('category/'+Date.now().toString());
@@ -44,6 +47,7 @@ class CategoryScreen extends React.Component {
           imageName:status.metadata.name
         })
         this.resetData()
+        this.setState({addCatLoader:false})
       })
     });
 
@@ -63,6 +67,9 @@ class CategoryScreen extends React.Component {
       });
       this.setState({
         data: tasks
+      });
+      this.setState({
+        listLoader: false
       });
     });
   }
@@ -97,6 +104,7 @@ class CategoryScreen extends React.Component {
     });
 
   }
+  
   render() {
     const { colors } = this.context;
     const mylist = this.state.data.map(item=>{
@@ -107,9 +115,9 @@ class CategoryScreen extends React.Component {
           description={item.desc}
           left={props => <Image {...props} style={{height: 50, width:50}} source={{ uri: item.url }} />}
           right={props => 
-            <View style={{gap:5}}>
+            <View>
               <TouchableOpacity><Avatar.Icon size={25} color={'#fff'} icon={"lead-pencil"} /></TouchableOpacity>
-              <TouchableOpacity onPress={() => this.deleteRow(item.key, item.imageName)}><Avatar.Icon size={25} color={'#fff'} icon={"delete"} /></TouchableOpacity>
+              <TouchableOpacity style={{marginTop:5}} onPress={() => this.deleteRow(item.key, item.imageName)}><Avatar.Icon size={25} color={'#fff'} icon={"delete"} /></TouchableOpacity>
             </View>
             }
           style={{borderBottomWidth: 1,borderBottomColor: '#cfcfcf'}}
@@ -142,15 +150,35 @@ class CategoryScreen extends React.Component {
             />
               
             <ImagePickerExample onImagePicked={this.setFoodImage} />
-            <Button mode="contained" style={{backgroundColor: colors.primary, marginVertical: 15,}} onPress={() => this.uploadImage()}>
-              Add Category
+            <Button mode="contained" style={{backgroundColor: colors.primary, marginVertical: 15,}} disabled={this.state.addCatLoader} onPress={() => this.uploadImage()}>
+              {this.state.addCatLoader?"Please wait...":"Add Category"}
             </Button>
             
           </View>
           <View>
+            {this.state.listLoader?
+            <View style={{flex:1,justifyContent:'center',alignItems:'center',paddingTop:30}}><ActivityIndicator size="large"/></View>
+                : null}
             {mylist}
           </View>
         </ScrollView>
+        {/*
+        const showDialog = () => this.setState({visible:true});
+        const hideDialog = () => this.setState({visible:false});
+    
+        <Button onPress={showDialog}>Show Dialog</Button>
+        <Portal>
+          <Dialog visible={this.state.visible} onDismiss={hideDialog}>
+            <Dialog.Title>Alert</Dialog.Title>
+            <Dialog.Content>
+              <Paragraph>Are you sure you want to delete this category?</Paragraph>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={hideDialog}>Cancel</Button>
+              <Button onPress={hideDialog}>Deleter</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal> */}
       </View>
     )}
   }

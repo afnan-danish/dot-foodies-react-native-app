@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   bottomDrawerSection: {
       marginBottom: 15,
       borderTopColor: '#f4f4f4',
-      borderTopWidth: 0.1
+      borderTopWidth: 1
   },
   preference: {
     flexDirection: 'row',

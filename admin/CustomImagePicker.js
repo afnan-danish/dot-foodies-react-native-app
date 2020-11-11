@@ -27,7 +27,7 @@ const ImagePickerExample = ({ onImagePicked }) => {
       base64: true,
     });
 
-    Alert.alert("a"+result.url);
+    //Alert.alert("a"+result.url);
     console.log(result.uri);
     console.log(result.base64);
 
