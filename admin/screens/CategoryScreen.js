@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import Header from '../../components/Header'
 import {TextInput, Button, List, Avatar, Paragraph, Dialog, Portal} from 'react-native-paper'
 import ImagePickerExample from '../CustomImagePicker'
@@ -32,26 +32,39 @@ class CategoryScreen extends React.Component {
       }
     });
   }
+  isValidate = () => {
+    if(this.state.catName=="") {
+      Alert.alert("Please enter category name")
+      console.log("Please enter category name")
+      return false
+    } else if(this.state.catImgUrl==null){
+      Alert.alert("Please select category picture")
+      console.log("Please select category picture")
+      return false
+    }  
+    return true
+  }
   uploadImage = async() => {
-    this.setState({addCatLoader:true})
-    const image = this.state.catImgUrl
-    //const user = this.getCurrentUser();
-    const refImage = firebase.storage().ref('category/'+Date.now().toString());
-    refImage.putString(image, 'data_url', {contentType:'image/jpg'}).then((status) => {
-      refImage.getDownloadURL().then((url) =>{
-        console.log('Image uploaded');
-        //console.log(status.metadata.name)
-        firebase.database().ref('category/').push().set({
-          name: this.state.catName,
-          desc: this.state.catDesc,
-          url: url,
-          imageName:status.metadata.name
+    if(this.isValidate()){
+      this.setState({addCatLoader:true})
+      const image = this.state.catImgUrl
+      //const user = this.getCurrentUser();
+      const refImage = firebase.storage().ref('category/'+Date.now().toString());
+      refImage.putString(image, 'data_url', {contentType:'image/jpg'}).then((status) => {
+        refImage.getDownloadURL().then((url) =>{
+          console.log('Image uploaded');
+          //console.log(status.metadata.name)
+          firebase.database().ref('category/').push().set({
+            name: this.state.catName,
+            desc: this.state.catDesc,
+            url: url,
+            imageName:status.metadata.name
+          })
+          this.resetData()
+          this.setState({addCatLoader:false})
         })
-        this.resetData()
-        this.setState({addCatLoader:false})
-      })
-    });
-
+      });
+    }
   }
   updateImage = () => {
     const image = this.state.catImgUrl

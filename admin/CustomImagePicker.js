@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, View, Platform, Alert } from 'react-native';
+import { Image, View, Text, Platform, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Button, useTheme } from 'react-native-paper';
 
@@ -29,13 +29,16 @@ const ImagePickerExample = ({img, onImagePicked }) => {
       base64: true,
     });
 
-    //Alert.alert("a"+result.url);
+    //Alert.alert("a"+result.base64);
     //console.log(result.base64);
     //console.log(result.exif);
 
     if (!result.cancelled) {
       setImage(result.uri);
-      result.base64?onImagePicked(result.base64):onImagePicked(result.uri);
+      let base64Img = 'data:image/jpg;base64,'+result.base64
+      //Alert.alert(base64Img);
+      onImagePicked(result.uri)
+      //result.base64?onImagePicked(base64Img):onImagePicked(result.uri);
     }
   };
 
@@ -48,6 +51,7 @@ const ImagePickerExample = ({img, onImagePicked }) => {
       <Button mode="contained" style={{backgroundColor: colors.primary}} onPress={pickImage}>
         Add Category Image
       </Button>
+      <Text>{img}</Text>
     </View>
   );
 }

@@ -39,6 +39,7 @@ class Header extends React.Component {
           onKeyPress={this.handleKeyPress}
           onChangeText={(searchKey) => this.setState({searchKey:searchKey})}
           onIconPress={() => this.props.navigation.navigate('SearchScreen', {key: this.state.searchKey})}
+          onSubmitEditing={()=>  this.props.navigation.navigate('SearchScreen', {key: this.state.searchKey})}
           //onBlur={()=> this.setState({isSearchOpen: false})}
         />
       </View>
