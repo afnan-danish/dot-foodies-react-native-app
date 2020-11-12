@@ -19,6 +19,7 @@ class CategoryScreen extends React.Component {
     data:[],
     listLoader:true,
     addCatLoader:false,
+    isUpdate:false,
   }
   
   setFoodImage = (uri) => {
@@ -52,6 +53,10 @@ class CategoryScreen extends React.Component {
     });
 
   }
+  updateImage = () => {
+    const image = this.state.catImgUrl
+    console.log(image)
+  }
   componentDidMount = () => {
     const items = firebase.database().ref('category/')
     items.on("value", dataSnapshot => {
@@ -78,6 +83,7 @@ class CategoryScreen extends React.Component {
     this.setState({catName: ""})
     this.setState({catDesc: ""})
     this.setState({catImgUrl: null})
+    this.setState({isUpdate: false})
   }
   /*
   Update 
@@ -89,6 +95,13 @@ class CategoryScreen extends React.Component {
     return firebase.database().ref('items').child('ITEM_KEY').update(updates);
   }
   */
+  updateData = (key, name, desc, url) => {
+    this.setState({isUpdate: true})
+    this.setState({addNew: true})
+    this.setState({catName: name})
+    this.setState({catDesc: desc})
+    this.setState({catImgUrl: url})
+  }
   deleteRow = (key, imgName) => {
     console.log(key)
     firebase.database().ref('category').child('' + key).remove().then(() => {
@@ -116,7 +129,7 @@ class CategoryScreen extends React.Component {
           left={props => <Image {...props} style={{height: 50, width:50}} source={{ uri: item.url }} />}
           right={props => 
             <View>
-              <TouchableOpacity><Avatar.Icon size={25} color={'#fff'} icon={"lead-pencil"} /></TouchableOpacity>
+              <TouchableOpacity onPress={() => this.updateData(item.key, item.name, item.desc, item.url )}><Avatar.Icon size={25} color={'#fff'} icon={"lead-pencil"} /></TouchableOpacity>
               <TouchableOpacity style={{marginTop:5}} onPress={() => this.deleteRow(item.key, item.imageName)}><Avatar.Icon size={25} color={'#fff'} icon={"delete"} /></TouchableOpacity>
             </View>
             }
@@ -149,9 +162,13 @@ class CategoryScreen extends React.Component {
               mode='outlined'
             />
               
-            <ImagePickerExample onImagePicked={this.setFoodImage} />
-            <Button mode="contained" style={{backgroundColor: colors.primary, marginVertical: 15,}} disabled={this.state.addCatLoader} onPress={() => this.uploadImage()}>
-              {this.state.addCatLoader?"Please wait...":"Add Category"}
+            <ImagePickerExample img={this.state.catImgUrl} onImagePicked={this.setFoodImage} />
+            
+            <Button mode="contained" 
+              style={{backgroundColor: colors.primary, marginVertical: 15,}} 
+              disabled={this.state.addCatLoader} 
+              onPress={() => this.state.isUpdate?this.updateImage():this.uploadImage()}>
+              {this.state.addCatLoader?"Please wait...": this.state.isUpdate?"Update Category":"Add Category"}
             </Button>
             
           </View>

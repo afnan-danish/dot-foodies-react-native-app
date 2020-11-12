@@ -3,11 +3,13 @@ import { Image, View, Platform, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Button, useTheme } from 'react-native-paper';
 
-const ImagePickerExample = ({ onImagePicked }) => {
+const ImagePickerExample = ({img, onImagePicked }) => {
   const [image, setImage] = useState(null);
   const { colors } = useTheme();
   
   useEffect(() => {
+    setImage( img );
+    
     (async () => {
       if (Platform.OS !== 'web') {
         const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -16,20 +18,20 @@ const ImagePickerExample = ({ onImagePicked }) => {
         }
       }
     })();
-  }, []);
+  }, [img]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 4],
+      aspect: [1, 1],
       quality: 1,
       base64: true,
     });
 
     //Alert.alert("a"+result.url);
-    console.log(result.uri);
-    console.log(result.base64);
+    //console.log(result.base64);
+    //console.log(result.exif);
 
     if (!result.cancelled) {
       setImage(result.uri);
