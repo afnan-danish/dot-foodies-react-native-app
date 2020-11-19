@@ -19,6 +19,8 @@ import{ AuthContext } from '../components/Context';
 
 import AdminDashboard from './screens/AdminDashboard'
 import CategoryScreen from './screens/CategoryScreen'
+import ProductScreen from './screens/ProductScreen'
+import AddProductScreen from './screens/AddProductScreen'
 
 const CreateDrawer = createDrawerNavigator();
 export const AdminDrawerNavigation = ({navigation}) => {
@@ -26,6 +28,8 @@ export const AdminDrawerNavigation = ({navigation}) => {
     <CreateDrawer.Navigator drawerContent={() => <DrawerContent navigation={navigation}/>}>
       <CreateDrawer.Screen name="Dashboard" component={AdminDashboard} />
       <CreateDrawer.Screen name="Category" component={CategoryScreen} />
+      <CreateDrawer.Screen name="Product" component={ProductScreen} />
+      <CreateDrawer.Screen name="AddProduct" component={AddProductScreen} />
     </CreateDrawer.Navigator>
   );
 }
@@ -106,7 +110,7 @@ const DrawerContent = (props) => {
                                 />
                             )}
                             label="Products"
-                            onPress={() => {}}
+                            onPress={() => navigation.navigate("Product")}
                         />
                         
                         <DrawerItem 

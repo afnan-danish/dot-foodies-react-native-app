@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Image, View, Text, Platform, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Button, useTheme } from 'react-native-paper';
+//import ImagePicker from 'react-native-image-picker';
 
 const ImagePickerExample = ({img, onImagePicked }) => {
   const [image, setImage] = useState(null);
@@ -19,7 +20,21 @@ const ImagePickerExample = ({img, onImagePicked }) => {
       }
     })();
   }, [img]);
-
+  /*
+  const pickImage = () => {
+    ImagePicker.showImagePicker({ title: 'Pick an Image', maxWidth: 800, maxHeight: 600 },
+      response => {
+        if (response.error) {
+          console.log("image error");
+        } else {
+          console.log("Image: " + response.uri)
+          setImage({ uri: response.uri });
+          onImagePicked({ uri: response.uri });
+        }
+      }
+    )
+  }
+  */
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -34,14 +49,14 @@ const ImagePickerExample = ({img, onImagePicked }) => {
     //console.log(result.exif);
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      setImage('data:image/jpg;base64,'+result.base64);
       let base64Img = 'data:image/jpg;base64,'+result.base64
       //Alert.alert(base64Img);
-      onImagePicked(result.uri)
+      onImagePicked('data:image/jpg;base64,'+result.base64)
       //result.base64?onImagePicked(base64Img):onImagePicked(result.uri);
     }
   };
-
+  
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       
@@ -51,7 +66,7 @@ const ImagePickerExample = ({img, onImagePicked }) => {
       <Button mode="contained" style={{backgroundColor: colors.primary}} onPress={pickImage}>
         Add Category Image
       </Button>
-      <Text>{img}</Text>
+      
     </View>
   );
 }

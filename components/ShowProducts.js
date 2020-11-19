@@ -36,7 +36,7 @@ class ShowCategory extends React.Component {
     const mylist = this.state.data.map(item=>{
       //console.log(item.url)
       return (
-        <TouchableOpacity style={styles.qFoodBox} onPress={() => {}}>
+        <TouchableOpacity style={styles.qFoodBox}>
           <Image source={{ uri: item.url }} style={styles.qFoodBoxImg} />
           <Text style={styles.qFoodBoxText}>{item.name}</Text>
         </TouchableOpacity>
@@ -44,8 +44,8 @@ class ShowCategory extends React.Component {
     });
     return (
       <View>
-        <ScrollView style={styles.qualityFood} horizontal={true} showsHorizontalScrollIndicator={false}>
-          {mylist}
+        <Text>Aaaa</Text>
+        <ScrollView style={styles.qualityFood} horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false}>
           {mylist}
         </ScrollView>
         
@@ -64,28 +64,28 @@ const styles = StyleSheet.create({
   },
   qFoodBox : {
     width: 120,
-    height: 55,
+    height: 60,
 	  backgroundColor: '#f4511e',
 	  //clipPath: 'polygon(0 0, 95% 20%, 98% 24%, 100% 31%, 100% 100%, 0 100%)',
     borderRadius: 10,
     margin: 0,
     position: 'relative',
     marginRight:10,
-    flex: 1,
-    flexDirection: 'row',
-    alignItems:'center',
-    padding:5,
   },
   
   qFoodBoxImg : {
-    width: 45,
-    height: 45,
-    alignSelf: "flex-start",
+    width: 38,
+    height: 38,
+    position: 'absolute',
+    left : 5,
+    bottom: 6,
   },
   qFoodBoxText : {
     fontSize: 15,
     color: '#fff',
-    textAlign:"right",
-    flex: 1,
+    //fontWeight: 'bold',
+    position: 'absolute',
+    top: 24,
+    right: 7 
   }
 });

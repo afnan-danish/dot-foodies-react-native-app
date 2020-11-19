@@ -47,9 +47,13 @@ class AdminLogin extends React.Component {
           onChangeText={(password) => this.setState({password:password}) }
           mode='outlined'
         />
-        <Button icon="cart" mode="contained" style={{backgroundColor: '#f4511e', marginTop:  20}} onPress={() => this.signInFunction()}>
+        <Button mode="contained" style={{backgroundColor: '#f4511e', marginTop:  20}} onPress={() => this.signInFunction()}>
 					SIGN IN
         </Button>
+
+        <Text onPress={() => this.props.navigation.navigate('SignInScreen')} 
+        style={{color:'#f4511e', fontWeight: 'bold', marginTop: 30, textAlign: 'center',fontSize: 16 }}
+						>User Login</Text>
 
       </View>
     )}

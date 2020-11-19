@@ -34,8 +34,8 @@ const Navigation = () => {
       background: '#f0f0fa',
       text: '#333333',
       header: '#ffff',
-      //main: '#f4511e',
       primary: "#f4511e",
+      statusbar: '#f4511e',
     }
   }
   
@@ -49,8 +49,8 @@ const Navigation = () => {
       text: '#ffffff',
       header: '#242750',
       card: "#12142f",
-      //main: '#f4511e',
       primary: "#f4511e",
+      statusbar: '#323a67',
     }
   }
   const theme = isDarkTheme ? CustomDarkTheme : CustomDefaultTheme;
