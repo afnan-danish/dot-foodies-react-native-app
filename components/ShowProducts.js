@@ -10,9 +10,9 @@ class ShowCategory extends React.Component {
     isLoading:true
   }
 
-  componentDidMount = () => {
+  componentDidMount = async() => {
     const items = firebase.database().ref('category/')
-    items.on("value", dataSnapshot => {
+    await items.on("value", dataSnapshot => {
       var tasks = [];
       dataSnapshot.forEach(child => {
         tasks.push({
@@ -32,11 +32,12 @@ class ShowCategory extends React.Component {
       });
     });
   }
+  
   render() {
     const mylist = this.state.data.map(item=>{
       //console.log(item.url)
       return (
-        <TouchableOpacity style={styles.qFoodBox}>
+        <TouchableOpacity style={styles.qFoodBox} key={item.key}>
           <Image source={{ uri: item.url }} style={styles.qFoodBoxImg} />
           <Text style={styles.qFoodBoxText}>{item.name}</Text>
         </TouchableOpacity>
@@ -44,11 +45,10 @@ class ShowCategory extends React.Component {
     });
     return (
       <View>
-        <Text>Aaaa</Text>
-        <ScrollView style={styles.qualityFood} horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false}>
-          {mylist}
-        </ScrollView>
-        
+        <View style={{flex:1, flexDirection: 'row', gap: 10}}>
+          <ProductCard name="Melting Cheese" description="Pizza ipsum dolor amet" img="pizza-classic.png" price="9" />
+          <ProductCard name="Oriental Pizza" description="Pizza ipsum dolor amet" img="pizza-oriental.png" price="10" />
+        </View>
       </View>
     )
   }
@@ -56,36 +56,19 @@ class ShowCategory extends React.Component {
 export default ShowCategory;
 
 const styles = StyleSheet.create({
-  qualityFood : {
-    width: '100%',
-    flexDirection: 'row',
-    paddingHorizontal:10,
-    paddingEnd:10,
+  products : {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  qFoodBox : {
-    width: 120,
-    height: 60,
-	  backgroundColor: '#f4511e',
-	  //clipPath: 'polygon(0 0, 95% 20%, 98% 24%, 100% 31%, 100% 100%, 0 100%)',
-    borderRadius: 10,
-    margin: 0,
-    position: 'relative',
-    marginRight:10,
-  },
-  
-  qFoodBoxImg : {
-    width: 38,
-    height: 38,
-    position: 'absolute',
-    left : 5,
-    bottom: 6,
-  },
-  qFoodBoxText : {
-    fontSize: 15,
-    color: '#fff',
-    //fontWeight: 'bold',
-    position: 'absolute',
-    top: 24,
-    right: 7 
-  }
 });

@@ -10,9 +10,9 @@ class ShowCategory extends React.Component {
     isLoading:true
   }
 
-  componentDidMount = () => {
+  componentDidMount = async() => {
     const items = firebase.database().ref('category/')
-    items.on("value", dataSnapshot => {
+    await items.on("value", dataSnapshot => {
       var tasks = [];
       dataSnapshot.forEach(child => {
         tasks.push({
@@ -36,7 +36,7 @@ class ShowCategory extends React.Component {
     const mylist = this.state.data.map(item=>{
       //console.log(item.url)
       return (
-        <TouchableOpacity style={styles.qFoodBox} onPress={() => {}}>
+        <TouchableOpacity style={styles.qFoodBox} key={item.key} onPress={() => {}}>
           <Image source={{ uri: item.url }} style={styles.qFoodBoxImg} />
           <Text style={styles.qFoodBoxText}>{item.name}</Text>
         </TouchableOpacity>
@@ -44,8 +44,7 @@ class ShowCategory extends React.Component {
     });
     return (
       <View>
-        <ScrollView style={styles.qualityFood} horizontal={true} showsHorizontalScrollIndicator={false}>
-          {mylist}
+        <ScrollView style={styles.qualityFood} contentContainerStyle={{paddingRight:10}} horizontal={true} showsHorizontalScrollIndicator={false}>
           {mylist}
         </ScrollView>
         
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     paddingHorizontal:10,
-    paddingEnd:10,
+    paddingRight:10,
   },
   qFoodBox : {
     width: 120,

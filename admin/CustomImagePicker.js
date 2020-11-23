@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, View, Text, Platform, Alert } from 'react-native';
+import { Image, View, Text, Platform, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Button, useTheme } from 'react-native-paper';
 //import ImagePicker from 'react-native-image-picker';
@@ -49,24 +49,25 @@ const ImagePickerExample = ({img, onImagePicked }) => {
     //console.log(result.exif);
 
     if (!result.cancelled) {
-      setImage('data:image/jpg;base64,'+result.base64);
+      setImage(result.uri);
       let base64Img = 'data:image/jpg;base64,'+result.base64
       //Alert.alert(base64Img);
-      onImagePicked('data:image/jpg;base64,'+result.base64)
+      onImagePicked(result.uri)
       //result.base64?onImagePicked(base64Img):onImagePicked(result.uri);
     }
   };
   
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      
-      <View style={{width: 250, height: 250, borderWidth: 1, borderColor: '#cfcfcf', marginVertical: 10}}>
-        {image && <Image source={{ uri: image }} style={{ width: 250, height: 250 }} />}
-      </View>
+      <TouchableOpacity  onPress={pickImage}>
+        <View style={{width: 250, height: 250, borderWidth: 1, borderColor: '#cfcfcf', marginVertical: 10}}>
+          {image && <Image source={{ uri: image }} style={{ width: 250, height: 250 }} />}
+        </View>
+      </TouchableOpacity>
       <Button mode="contained" style={{backgroundColor: colors.primary}} onPress={pickImage}>
-        Add Category Image
+        Select Image
       </Button>
-      
+     
     </View>
   );
 }

@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, Image, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Header from '../components/Header'
 import { useTheme } from '@react-navigation/native'
 import { ThemeContext } from '../components/Context';
 import ShowCategory  from '../components/ShowCategory';
 import ShowProducts  from '../components/ShowProducts';
+import SingleProduct from '../components/SingleProducts';
 
 /*
 export class Root2 extends React.Component {
@@ -37,17 +38,27 @@ class HomeScreen extends React.Component {
           <ShowCategory />
         </View>
 
-
         <View>
-          <ShowProducts />
+          <View style={{marginVertical: 20,height:30,flexDirection:'row',paddingHorizontal:10}}>
+            <Text style={{flex: 1,fontSize: 25,alignSelf:'flex-start'}}>Popular</Text>
+            <View >
+              <TouchableOpacity style={{flex:1,alignSelf:'flex-end',marginTop:8}} onPress={() => {}}>
+                <Text style={{color: '#a0a0a0'}} >See All</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <ScrollView contentContainerStyle={{flexDirection:'row', paddingHorizontal: 5,}}  horizontal={true} showsHorizontalScrollIndicator={false}>
+            <SingleProduct name="Melting Cheese" description="Pizza ipsum dolor amet" img={require('../image/pizza-classic.png')} price="9" />
+            <SingleProduct name="Oriental Pizza" description="Pizza ipsum dolor amet" img={require('../image/pizza-oriental.png')} price="10" />
+            <SingleProduct name="Melting Cheese" description="Pizza ipsum dolor amet" img={require('../image/pizza-classic.png')} price="9" />
+            <SingleProduct name="Oriental Pizza" description="Pizza ipsum dolor amet" img={require('../image/pizza-oriental.png')} price="10" />
+          </ScrollView>
         </View>
 
       </View>
     )}
 }
-
 export default HomeScreen;
-
 
 const styles = StyleSheet.create({
   

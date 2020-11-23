@@ -2,7 +2,7 @@ import { CommonActions } from '@react-navigation/native'
 import React from 'react'
 import { View, Text, Alert,SafeAreaView } from 'react-native'
 import Header from '../../components/Header'
-import {TextInput, Button, List, Avatar, Paragraph, Dialog, Portal} from 'react-native-paper'
+import {TextInput, Button, List, Avatar, Paragraph, Dialog, Portal, Modal, ActivityIndicator} from 'react-native-paper'
 import{ ThemeContext } from '../../components/Context'
 import * as firebase from 'firebase/app';
 
@@ -19,6 +19,9 @@ class ProductScreen extends React.Component {
         </Button>
         <Text style={{textAlign: 'center', fontSize: 25, marginBottom: 20}}>Product Screen</Text>
         
+
+        
+      
       </SafeAreaView>
     )}
   }
