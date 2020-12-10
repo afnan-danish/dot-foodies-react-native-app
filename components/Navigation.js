@@ -3,16 +3,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-community/async-storage';
 import { AuthContext, ThemeContext } from '../components/Context';
 import { NavigationContainer, DefaultTheme , DarkTheme } from '@react-navigation/native';
-import {Provider as PaperProvider, DarkTheme as PaperDarkTheme, DefaultTheme as PaperDefaultTheme } from 'react-native-paper'
+import {Provider as PaperProvider, DarkTheme as PaperDarkTheme, DefaultTheme as PaperDefaultTheme, ActivityIndicator } from 'react-native-paper'
 
 import {DrawerNavigation} from './DrawerNavigation'
 import {AdminDrawerNavigation} from '../admin/AdminDrawerNavigation'
 import DetailScreen from '../screens/DetailScreen'
-import SearchScreen from '../screens/SearchScreen'
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import AdminLogin from '../admin/screens/AdminLogin';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 
 
 const Stack = createStackNavigator();
@@ -101,6 +100,7 @@ const Navigation = () => {
   const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
   
   const authContext = React.useMemo(() => ({
+    //const userT = loginState.userToken;
     signIn: async(user) => {
       //setUserToken(null);
       //setIsLoading(false);
@@ -126,11 +126,6 @@ const Navigation = () => {
         console.log(e);
       }
       dispatch({ type: 'LOGOUT' });
-    },
-    loginCheck: () => {
-      //alert("1"+loginState.userToken);
-      //const abcd = loginState.userToken;
-      return loginState.userToken;
     },
     toggleTheme: () => {
       setIsDarkTheme( isDarkTheme => !isDarkTheme );
@@ -172,14 +167,14 @@ const Navigation = () => {
   if( loginState.isLoading ) {
     return(
       <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-        <ActivityIndicator size="large"/>
+        <ActivityIndicator color={"#f4511e"} size="large"/>
       </View>
     );
   }
   return(
     <PaperProvider theme={theme}>
       <NavigationContainer theme={theme}>
-        <AuthContext.Provider value={authContext}>
+        <AuthContext.Provider value={{auth:authContext, uid:loginState.userToken}}>
           <ThemeContext.Provider value={theme}>
             { loginState.userToken === null ? (
               <Stack.Navigator initialRouteName="SignInScreen" screenOptions={{ headerShown: false }}>
@@ -191,13 +186,10 @@ const Navigation = () => {
               loginState.adminMode === null ? (
               <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Home" component={DrawerNavigation} />
-                <Stack.Screen name="Details" component={DetailScreen} />
-                <Stack.Screen name="SearchScreen" component={SearchScreen} />
               </Stack.Navigator>
               ) : (
                 <Stack.Navigator screenOptions={{ headerShown: false }}>
                    <Stack.Screen name="Home" component={AdminDrawerNavigation} />
-                  <Stack.Screen name="SearchScreen" component={SearchScreen} />
                 </Stack.Navigator>
               )
             )}

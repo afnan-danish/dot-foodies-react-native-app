@@ -27,7 +27,7 @@ class SignUpScreen extends React.Component {
   signInHandle() {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(
-        user => this.context.signIn(user.user.uid)
+        user => this.context.auth.signIn(user.user.uid)
       )
       .catch(function(error) {
         // Handle Errors here.

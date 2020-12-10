@@ -26,6 +26,9 @@ class AddProductScreen extends React.Component {
         isAdding:false,
     };  
   }
+  keyGenerator = () => {
+    return (((1+Math.random())*0x1000000)|0).toString(16).substring(1);
+  }
   validate = () => {
     return true
   }
@@ -40,6 +43,7 @@ class AddProductScreen extends React.Component {
           console.log('Image uploaded');
           //console.log(status.metadata.name)
           firebase.database().ref('products/').push().set({
+            id: this.keyGenerator(),
             name: this.state.name,
             desc: this.state.desc,
             shortDesc: this.state.shortDesc,
@@ -47,9 +51,11 @@ class AddProductScreen extends React.Component {
             salePrice: this.state.salePrice,
             url: url,
             category:this.state.category,
+            imageName:status.metadata.name
           })
           this.resetData()
           this.setState({isAdding:false})
+          this.props.navigation.navigate("Product")
         })
       });
     }
@@ -73,12 +79,13 @@ class AddProductScreen extends React.Component {
   render() {
     const { colors } = this.context;
     //console.log(this.state.imgUrl)
+    //alert(this.keyGenerator())
     return (
       <View>
         <Header navigation={this.props.navigation} title={this.props.route.name} />
         
         <ScrollView style={{padding: 10, marginBottom: 56}} contentContainerStyle={{paddingBottom:30}}>
-          <Text style={{fontSize: 20}}>Add New Product</Text>
+          <Text style={{fontSize: 20}}>Add New Product </Text>
           <TextInput
             label="Name"
             value={this.state.name}

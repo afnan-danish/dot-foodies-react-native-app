@@ -23,7 +23,7 @@ class AdminLogin extends React.Component {
 
   signInFunction() {
     if(this.state.email=="admin" && this.state.password=="admin"){
-      this.context.adminSignIn(this.state.email+"123456")
+      this.context.auth.adminSignIn(this.state.email+"123456")
     } else {
       alert("Invalid Credential!!!")
     }

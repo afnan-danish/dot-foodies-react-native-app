@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, SafeAreaView, StatusBar } from 'react-native';
 import { Appbar, Searchbar } from 'react-native-paper';
 import{ ThemeContext } from '../components/Context';
+import CartCount  from './CartCount';
 
 
 class Header extends React.Component {
@@ -22,20 +23,19 @@ class Header extends React.Component {
   render() {
     const { colors } = this.context;
     //console.log(colors)
+    
     return(
       <SafeAreaView>
         <StatusBar backgroundColor={colors.statusbar} barStyle="light-content" />
         <Appbar.Header style={{backgroundColor: colors.header}} statusBarHeight={0} >
-          <Appbar.Action icon="menu" onPress={() => this.props.navigation.openDrawer() } />
-          <Appbar.Content title={this.props.title} />
+          {this.props.goBack?
+            <Appbar.Action icon="chevron-left" onPress={() => this.props.navigation.navigate('HomeScreen') } /> 
+          : 
+            <Appbar.Action icon="menu" onPress={() => this.props.navigation.openDrawer() } /> 
+          }
+          <Appbar.Content style={{paddingLeft:0}} title={this.props.title}  />
           
-          <View style={{position:"relative"}}>
-            <Appbar.Action style={{color:"#000"}} color={colors.text} icon="cart" 
-              onPress={()=> {}} />
-            <View style={{position:"absolute",top:8,right:1,backgroundColor:colors.primary,height:18,width:18,borderRadius:10,alignItems:'center'}}>
-              <Text style={{color:'#fff'}}>6</Text>
-            </View>
-          </View>         
+          <CartCount colors={colors} />        
           
           <Appbar.Action icon={this.state.isSearchOpen? "close" : "magnify" }
             onPress={()=> this.state.isSearchOpen? this.setState({isSearchOpen: false}) : this.setState({isSearchOpen: true}) }

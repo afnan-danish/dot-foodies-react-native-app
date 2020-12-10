@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TouchableH
 import storage from '@react-native-firebase/storage';
 import * as firebase from 'firebase';
 import { ActivityIndicator } from 'react-native-paper';
-import { NavigationActions } from 'react-navigation';
-
+import Header from '../components/Header'
+import SingleProduct from '../components/SingleProducts';
 
 class ShowCategory extends React.Component {
   state = {
@@ -12,49 +12,70 @@ class ShowCategory extends React.Component {
     isLoading:true
   }
 
-  componentDidMount = async() => {
-    const items = firebase.database().ref('category/')
-    await items.on("value", dataSnapshot => {
+  componentDidMount = () => {
+    const items = firebase.database().ref('products/').orderByChild("category").equalTo(this.props.route.params.name);
+    //const items = firebase.database().ref('products/-MMpIds11dC43fghQdOI');
+    items.on("value", dataSnapshot => {
+      console.log(dataSnapshot.val())
       var tasks = [];
       dataSnapshot.forEach(child => {
         tasks.push({
-          name: child.val().name,
-          desc: child.val().desc,
-          url: child.val().url,
+          //name: child.val().name,
+          //desc: child.val().desc,
+          //url: child.val().url,
           key: child.key,
-          imageName: child.val().imageName,
+          id:child.val().id,
+          //imageName: child.val().imageName,
         })
       });
+      
       this.setState({
         data: tasks,
         
       });
       this.setState({
-        isLoading: false
+        isLoading:false
       });
+      /*
+      dataSnapshot.forEach(child => {
+        
+        //console.log(child.key)
+        this.setState({
+          id : child.val().id,
+          name : child.val().name,
+          desc : child.val().shortDesc,
+          imguri : child.val().url,
+          salePrice : child.val().salePrice,
+          regularPrice : child.val().regularPrice,
+        })
+      });
+      
+      */
     });
   }
   render() {
     const mylist = this.state.data.map(item=>{
       //console.log(item.url)
       return (
-        <TouchableOpacity style={styles.qFoodBox} key={item.key} 
-        onPress={() => 
-          this.props.navigation.reset({index: 1, routes: [{name:'ExploreCategory', params: {name:item.name}}] })
-        } 
-        >
+        /*
+        <TouchableOpacity style={styles.qFoodBox} key={item.key} onPress={() => {}}>
           <Image source={{ uri: item.url }} style={styles.qFoodBoxImg} />
           <Text style={styles.qFoodBoxText}>{item.name}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/
+        <SingleProduct id={item.id} key={item.key} width={"47%"} navigation={this.props.navigation} />
       )
     });
     return (
+      
       <View>
+        <Header navigation={this.props.navigation} title={this.props.route.params.name} goBack={true} />
         {this.state.isLoading?
           <ActivityIndicator size='small' />
         :
-          <ScrollView style={styles.qualityFood} contentContainerStyle={{paddingRight:10}} horizontal={true} showsHorizontalScrollIndicator={false}>
-            {mylist}
+          <ScrollView contentContainerStyle={{paddingTop:30}}>
+            <View style={styles.qualityFood}>
+              {mylist}
+            </View>
           </ScrollView>
         }
       </View>
@@ -67,8 +88,10 @@ const styles = StyleSheet.create({
   qualityFood : {
     width: '100%',
     flexDirection: 'row',
+    flexWrap: "wrap",
     paddingHorizontal:10,
     paddingRight:10,
+    
   },
   qFoodBox : {
     width: 120,

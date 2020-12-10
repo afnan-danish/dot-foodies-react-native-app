@@ -17,12 +17,18 @@ import {
 import{ AuthContext } from '../components/Context';
 
 import HomeScreen from '../screens/HomeScreen'
+import DetailScreen from '../screens/DetailScreen';
+import SearchScreen from '../screens/SearchScreen'
+import ExploreCategory from '../screens/ExploreCategory'
 
 const CreateDrawer = createDrawerNavigator();
 export const DrawerNavigation = ({navigation}) => {
   return (
     <CreateDrawer.Navigator drawerContent={() => <DrawerContent navigation={navigation}/>}>
-      <CreateDrawer.Screen name="Home" component={HomeScreen} />
+      <CreateDrawer.Screen name="HomeScreen" component={HomeScreen} />
+      <CreateDrawer.Screen name="DetailScreen" component={DetailScreen} />
+      <CreateDrawer.Screen name="SearchScreen" component={SearchScreen} />
+      <CreateDrawer.Screen name="ExploreCategory" component={ExploreCategory} />
     </CreateDrawer.Navigator>
   );
 }
@@ -35,7 +41,7 @@ const DrawerContent = (props) => {
   const contextType = AuthContext;
   const paperTheme = useTheme();
   
-  const { signOut, loginCheck, toggleTheme } = React.useContext(AuthContext);
+  const { signOut, loginCheck, toggleTheme } = React.useContext(AuthContext).auth;
   return (
     <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>
@@ -70,7 +76,7 @@ const DrawerContent = (props) => {
                                 />
                             )}
                             label="Home"
-                            onPress={() => {}}
+                            onPress={() => navigation.navigate("HomeScreen")}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (

@@ -42,7 +42,7 @@ const DrawerContent = (props) => {
   const contextType = AuthContext;
   const paperTheme = useTheme();
   
-  const { signOut, loginCheck, toggleTheme } = React.useContext(AuthContext);
+  const { signOut, loginCheck, toggleTheme } = React.useContext(AuthContext).auth;
   return (
     <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>

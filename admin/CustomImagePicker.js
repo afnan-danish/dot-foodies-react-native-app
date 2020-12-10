@@ -46,8 +46,7 @@ const ImagePickerExample = ({img, onImagePicked }) => {
 
     //Alert.alert("a"+result.base64);
     //console.log(result.base64);
-    //console.log(result.exif);
-
+    
     if (!result.cancelled) {
       setImage(result.uri);
       let base64Img = 'data:image/jpg;base64,'+result.base64
@@ -67,7 +66,6 @@ const ImagePickerExample = ({img, onImagePicked }) => {
       <Button mode="contained" style={{backgroundColor: colors.primary}} onPress={pickImage}>
         Select Image
       </Button>
-     
     </View>
   );
 }

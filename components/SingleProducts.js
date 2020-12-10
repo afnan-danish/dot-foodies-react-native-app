@@ -2,11 +2,50 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native';
 import storage from '@react-native-firebase/storage';
 import * as firebase from 'firebase';
-import { Button } from 'react-native-paper';
+import { Button, ActivityIndicator } from 'react-native-paper';
+import { ThemeContext } from '../components/Context';
+import { NavigationActions } from 'react-navigation';
+
 
 class SingleProduct extends React.Component {
-  
+  static contextType = ThemeContext;
+  constructor(props) {  
+    super(props);  
+    this.state = {
+      id: '',
+      name: '',
+      desc: '',
+      imguri : '',
+      salePrice: '',
+      regularPrice: '',
+      isLoading:true,
+    };  
+  }
+  componentDidMount = () => {
+    const items = firebase.database().ref('products/').orderByChild("id").equalTo(this.props.id);
+    //const items = firebase.database().ref('products/-MMpIds11dC43fghQdOI');
+    items.on("value", dataSnapshot => {
+      //console.log(dataSnapshot.val())
+      dataSnapshot.forEach(child => {
+        //console.log(child.key)
+        this.setState({
+          id : child.val().id,
+          name : child.val().name,
+          desc : child.val().shortDesc,
+          imguri : child.val().url,
+          salePrice : child.val().salePrice,
+          regularPrice : child.val().regularPrice,
+        })
+      });
+      this.setState({
+        isLoading:false
+      });
+      
+    });
+  }
   render() {
+    const { colors } = this.context;
+    //console.log(this.state.data)
     /*
     navigation.reset({
       index: 0,
@@ -14,28 +53,30 @@ class SingleProduct extends React.Component {
     });
     */
    
-   //console.log(this.props.img)
-   //const uur = this.props.img==null?'../image/pizza-classic.png':'../image/pizza-classic.png'
-   //const imageURI = Asset.fromModule(require(uur)).uri;
-
-   
-
     return (
-      <View style={styles.products}>
-        <Text style={{textAlign:'center', fontSize:18, fontWeight: 'bold'}}>{this.props.name}</Text>
-        <Text style={{color: '#a0a0a0',fontSize:12, textAlign: 'center', }}>{this.props.description}</Text>
-        <View style={{alignItems: 'center',paddingVertical: 15}}>
-          <Image source={this.props.img} style={{ width: 120, height: 120}} />
-        </View>
-        <View style={{flexDirection:'row'}}>
-          <Text style={{color: '#a0a0a0',alignSelf:'flex-start'}}>$ <Text style={{fontSize: 22, color: '#000', fontWeight: 'bold', }}>{this.props.price}</Text></Text>
-          <View style={{flex:1}}>
-            <TouchableOpacity style={{alignSelf:'flex-end'}} onPress={() => {}} >
+      <View style={[styles.products, {backgroundColor:colors.header}, this.props.width!=null?{width:this.props.width}:null]}>
+        {this.state.isLoading?<ActivityIndicator size='small' style={{paddingVertical: 100}} />:
+        <View>
+          <Text style={{textAlign:'center',color: colors.text, fontSize:18, fontWeight: 'bold'}}>{this.state.name}</Text>
+          <Text style={{color: '#a0a0a0',fontSize:12, textAlign: 'center', }}>{this.state.desc}</Text>
+          <View style={{alignItems: 'center',paddingVertical: 15}}>
+            <Image source={{uri :this.state.imguri}} style={{ width: 120, height: 120}} />
+          </View>
+          <View style={{flexDirection:'row'}}>
+            <Text style={{color: '#a0a0a0',alignSelf:'flex-start'}}>Rs <Text style={{fontSize: 22, color: colors.text, fontWeight: 'bold', }}>{this.state.salePrice}</Text></Text>
+            <View style={{flex:1}}>
+              <TouchableOpacity style={{alignSelf:'flex-end'}} 
+                onPress={() => 
+                  this.props.navigation.reset({index: 0, routes: [{name:'DetailScreen', params: {id: this.state.id}}] })
+                } 
+              >
                 <Text style={styles.addBtn}>+</Text>
-            </TouchableOpacity>
-            
+              </TouchableOpacity>
+              
+            </View>
           </View>
         </View>
+        }
       </View>
     );
   }
@@ -44,7 +85,7 @@ export default SingleProduct;
 
 const styles = StyleSheet.create({
   products : {
-    width:150,
+    width:160,
     backgroundColor: '#fff',
     paddingHorizontal: 10,
     paddingVertical: 10,
