@@ -7,7 +7,7 @@ import { ThemeContext } from '../components/Context';
 import { NavigationActions } from 'react-navigation';
 
 
-class SingleProduct extends React.Component {
+class CartSingleProduct extends React.Component {
   static contextType = ThemeContext;
   constructor(props) {  
     super(props);  
@@ -54,9 +54,19 @@ class SingleProduct extends React.Component {
     */
    
     return (
-      <View style={[styles.products, {backgroundColor:colors.header}, this.props.width!=null?{width:this.props.width}:null]}>
-        {this.state.isLoading?<ActivityIndicator size='small' style={{paddingVertical: 100}} />:
-        <View>
+      <View style={[styles.products, {backgroundColor:colors.header} ]}>
+        {this.state.isLoading?<ActivityIndicator size='small' style={{paddingVertical: 5}} />:(
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <View style={{width:60}}>
+            <Image source={{uri :this.state.imguri}} style={{ width: 60, height: 60}} />
+          </View>
+          <View style={{flex:1,paddingLeft: 15}}>
+            <Text style={{color: colors.text, fontSize:18, fontWeight: 'bold'}}>{this.state.name}</Text>
+            <Text style={{color: '#a0a0a0',alignSelf:'flex-start'}}>
+              Rs <Text style={{fontSize: 22, color: colors.text, fontWeight: 'bold', }}>{this.state.salePrice}</Text>
+            </Text>
+          </View>
+          {/*}
           <Text style={{textAlign:'center',color: colors.text, fontSize:18, fontWeight: 'bold'}}>{this.state.name}</Text>
           <Text style={{color: '#a0a0a0',fontSize:12, textAlign: 'center', }}>{this.state.desc}</Text>
           <View style={{alignItems: 'center',paddingVertical: 15}}>
@@ -76,17 +86,19 @@ class SingleProduct extends React.Component {
               
             </View>
           </View>
+              */}
         </View>
-        }
+        )}
       </View>
     );
   }
 }
-export default SingleProduct;
+export default CartSingleProduct;
 
 const styles = StyleSheet.create({
   products : {
-    width:160,
+    flex:1,
+    alignItems: 'stretch',
     backgroundColor: '#fff',
     paddingHorizontal: 10,
     paddingVertical: 10,
@@ -100,7 +112,8 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     marginHorizontal:5,
-    marginBottom: 10
+    marginBottom: 10,
+    
   },
   addBtn : {
     backgroundColor: '#f4511e', 

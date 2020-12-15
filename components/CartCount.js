@@ -34,7 +34,7 @@ class CartCount extends React.Component {
     return(
       <View style={{position:"relative"}}>
         <Appbar.Action color={this.props.colors.text} icon="cart" 
-          onPress={()=> {}} />
+          onPress={()=> {}}  onPress={() =>  this.props.navigation.navigate('CartScreen') } />
         <View style={{position:"absolute",top:8,right:1,backgroundColor:this.props.colors.primary,height:18,width:18,borderRadius:10,alignItems:'center',justifyContent:'center'}}>
           <Text style={{color:'#fff'}}>{this.state.count}</Text>
         </View>

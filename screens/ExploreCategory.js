@@ -1,68 +1,86 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native';
 import storage from '@react-native-firebase/storage';
+
 import * as firebase from 'firebase';
 import { ActivityIndicator } from 'react-native-paper';
 import Header from '../components/Header'
 import SingleProduct from '../components/SingleProducts';
+import '@firebase/firestore';
 
-class ShowCategory extends React.Component {
+class ExploreCategory extends React.Component {
   state = {
     data:[],
     isLoading:true
   }
-
-  componentDidMount = () => {
-    const items = firebase.database().ref('products/').orderByChild("category").equalTo(this.props.route.params.name);
-    //const items = firebase.database().ref('products/-MMpIds11dC43fghQdOI');
-    items.on("value", dataSnapshot => {
-      console.log(dataSnapshot.val())
-      var tasks = [];
-      dataSnapshot.forEach(child => {
-        tasks.push({
-          //name: child.val().name,
-          //desc: child.val().desc,
-          //url: child.val().url,
-          key: child.key,
-          id:child.val().id,
-          //imageName: child.val().imageName,
-        })
+  /*
+  getRestaurants = async (abcd) => {
+    try {
+      const list = [];
+      var searchKey = abcd
+      var snapshot = await firebase.firestore().collection("products").where('category', '<=', searchKey).where('category', '>=', searchKey).orderBy("category").get();
+      console.log("Here");
+      snapshot.forEach((doc) => {
+        list.push(doc.data());
       });
-      
+      //setRestaurantsList(list);
+      console.log(list)
       this.setState({
-        data: tasks,
-        
-      });
-      this.setState({
+        data: list,
         isLoading:false
       });
-      /*
-      dataSnapshot.forEach(child => {
-        
-        //console.log(child.key)
-        this.setState({
-          id : child.val().id,
-          name : child.val().name,
-          desc : child.val().shortDesc,
-          imguri : child.val().url,
-          salePrice : child.val().salePrice,
-          regularPrice : child.val().regularPrice,
-        })
+    } catch (e) {
+      console.log(e+
+        "There's nae bleeding restaurants, I told you to upload them!"
+      );
+    }
+  }
+  */
+  componentWillUnmount = () => {
+    this.unsubscribe()
+  }
+  componentDidMount = () => {
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.setState({
+        isLoading:true
       });
-      
-      */
-    });
+      //this.getRestaurants(this.props.route.params.name)
+      const items = firebase.database().ref('products/').orderByChild("category").equalTo(this.props.route.params.name);
+      //const items = firebase.database().ref('products/-MMpIds11dC43fghQdOI');
+      items.on("value", dataSnapshot => {
+        //console.log(dataSnapshot.val())
+        var tasks = [];
+        dataSnapshot.forEach(child => {
+          tasks.push({
+            //name: child.val().name,
+            //desc: child.val().desc,
+            //url: child.val().url,
+            key: child.key,
+            id:child.val().id,
+            //imageName: child.val().imageName,
+          })
+        });
+        
+        this.setState({
+          data: tasks,
+          isLoading:false
+        });
+        
+      });
+    })
+    
+
+    
+  }
+  componentWillUnmount = () => {
+
   }
   render() {
+    
     const mylist = this.state.data.map(item=>{
       //console.log(item.url)
       return (
-        /*
-        <TouchableOpacity style={styles.qFoodBox} key={item.key} onPress={() => {}}>
-          <Image source={{ uri: item.url }} style={styles.qFoodBoxImg} />
-          <Text style={styles.qFoodBoxText}>{item.name}</Text>
-        </TouchableOpacity>*/
-        <SingleProduct id={item.id} key={item.key} width={"47%"} navigation={this.props.navigation} />
+        <SingleProduct id={item.id} key={item.id} width={"47%"} navigation={this.props.navigation} />
       )
     });
     return (
@@ -70,7 +88,7 @@ class ShowCategory extends React.Component {
       <View>
         <Header navigation={this.props.navigation} title={this.props.route.params.name} goBack={true} />
         {this.state.isLoading?
-          <ActivityIndicator size='small' />
+          <ActivityIndicator size='small' style={{marginTop: 40,}} />
         :
           <ScrollView contentContainerStyle={{paddingTop:30}}>
             <View style={styles.qualityFood}>
@@ -82,7 +100,7 @@ class ShowCategory extends React.Component {
     )
   }
 }
-export default ShowCategory;
+export default ExploreCategory;
 
 const styles = StyleSheet.create({
   qualityFood : {

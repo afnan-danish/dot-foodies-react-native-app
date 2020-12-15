@@ -34,26 +34,30 @@ class DetailScreen extends React.Component {
         this.setState({userId: user.uid});
       }
     });
-
-    const items = firebase.database().ref('products/').orderByChild("id").equalTo(this.props.route.params.id)       // .equalTo(this.props.route.params.id);
-    //const items = firebase.database().ref('products/-MMpIds11dC43fghQdOI');
-    items.on("value", dataSnapshot => {
-      //console.log(dataSnapshot.val())
-      dataSnapshot.forEach(child => {
-        //console.log(child.key)
+    this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      const items = firebase.database().ref('products/').orderByChild("id").equalTo(this.props.route.params.id)       // .equalTo(this.props.route.params.id);
+      //const items = firebase.database().ref('products/-MMpIds11dC43fghQdOI');
+      items.on("value", dataSnapshot => {
+        //console.log(dataSnapshot.val())
+        dataSnapshot.forEach(child => {
+          //console.log(child.key)
+          this.setState({
+            id : child.val().id,
+            name : child.val().name,
+            desc : child.val().shortDesc,
+            imguri : child.val().url,
+            salePrice : child.val().salePrice,
+            regularPrice : child.val().regularPrice,
+          })
+        });
         this.setState({
-          id : child.val().id,
-          name : child.val().name,
-          desc : child.val().shortDesc,
-          imguri : child.val().url,
-          salePrice : child.val().salePrice,
-          regularPrice : child.val().regularPrice,
-        })
-      });
-      this.setState({
-        isLoading:false
+          isLoading:false
+        });
       });
     });
+  }
+  componentWillUnmount = () => {
+    this.unsubscribe()
   }
   
   updateCart = () => {

@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@firebase/firestore": "^2.1.0",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/app": "^8.4.6",

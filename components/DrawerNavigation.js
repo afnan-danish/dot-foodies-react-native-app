@@ -20,6 +20,7 @@ import HomeScreen from '../screens/HomeScreen'
 import DetailScreen from '../screens/DetailScreen';
 import SearchScreen from '../screens/SearchScreen'
 import ExploreCategory from '../screens/ExploreCategory'
+import CartScreen from '../screens/CartScreen'
 
 const CreateDrawer = createDrawerNavigator();
 export const DrawerNavigation = ({navigation}) => {
@@ -29,6 +30,7 @@ export const DrawerNavigation = ({navigation}) => {
       <CreateDrawer.Screen name="DetailScreen" component={DetailScreen} />
       <CreateDrawer.Screen name="SearchScreen" component={SearchScreen} />
       <CreateDrawer.Screen name="ExploreCategory" component={ExploreCategory} />
+      <CreateDrawer.Screen name="CartScreen" component={CartScreen} />
     </CreateDrawer.Navigator>
   );
 }

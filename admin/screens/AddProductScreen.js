@@ -42,6 +42,7 @@ class AddProductScreen extends React.Component {
         refImage.getDownloadURL().then((url) =>{
           console.log('Image uploaded');
           //console.log(status.metadata.name)
+          /*
           firebase.database().ref('products/').push().set({
             id: this.keyGenerator(),
             name: this.state.name,
@@ -53,6 +54,25 @@ class AddProductScreen extends React.Component {
             category:this.state.category,
             imageName:status.metadata.name
           })
+          */
+         firebase.firestore()
+            .collection('products')
+            .add({
+              id: this.keyGenerator(),
+              name: this.state.name,
+              desc: this.state.desc,
+              shortDesc: this.state.shortDesc,
+              regularPrice: this.state.regularPrice,
+              salePrice: this.state.salePrice,
+              url: url,
+              category:this.state.category,
+              imageName:status.metadata.name
+            })
+            .then(() => {
+              console.log('User added!');
+          });
+
+
           this.resetData()
           this.setState({isAdding:false})
           this.props.navigation.navigate("Product")

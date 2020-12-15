@@ -35,7 +35,7 @@ class Header extends React.Component {
           }
           <Appbar.Content style={{paddingLeft:0}} title={this.props.title}  />
           
-          <CartCount colors={colors} />        
+          <CartCount colors={colors} {...this.props} />        
           
           <Appbar.Action icon={this.state.isSearchOpen? "close" : "magnify" }
             onPress={()=> this.state.isSearchOpen? this.setState({isSearchOpen: false}) : this.setState({isSearchOpen: true}) }

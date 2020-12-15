@@ -40,7 +40,8 @@ class ShowCategory extends React.Component {
       return (
         <TouchableOpacity style={styles.qFoodBox} key={item.key} 
         onPress={() => 
-          this.props.navigation.reset({index: 1, routes: [{name:'ExploreCategory', params: {name:item.name}}] })
+          //this.props.navigation.reset({index: 0, routes: [{name:'ExploreCategory', params: {name:item.name}}] })
+          this.props.navigation.navigate('ExploreCategory', {name:item.name })
         } 
         >
           <Image source={{ uri: item.url }} style={styles.qFoodBoxImg} />
