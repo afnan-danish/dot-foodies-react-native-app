@@ -29,7 +29,7 @@ class Header extends React.Component {
         <StatusBar backgroundColor={colors.statusbar} barStyle="light-content" />
         <Appbar.Header style={{backgroundColor: colors.header}} statusBarHeight={0} >
           {this.props.goBack?
-            <Appbar.Action icon="chevron-left" onPress={() => this.props.navigation.navigate('HomeScreen') } /> 
+            <Appbar.Action icon="chevron-left" onPress={() => this.props.navigation.goBack() } /> 
           : 
             <Appbar.Action icon="menu" onPress={() => this.props.navigation.openDrawer() } /> 
           }

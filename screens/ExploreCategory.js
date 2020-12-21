@@ -90,7 +90,7 @@ class ExploreCategory extends React.Component {
         {this.state.isLoading?
           <ActivityIndicator size='small' style={{marginTop: 40,}} />
         :
-          <ScrollView contentContainerStyle={{paddingTop:30}}>
+          <ScrollView contentContainerStyle={{paddingTop:20, paddingBottom: 50}}>
             <View style={styles.qualityFood}>
               {mylist}
             </View>

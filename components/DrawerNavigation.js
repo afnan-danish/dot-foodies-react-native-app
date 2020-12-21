@@ -21,16 +21,18 @@ import DetailScreen from '../screens/DetailScreen';
 import SearchScreen from '../screens/SearchScreen'
 import ExploreCategory from '../screens/ExploreCategory'
 import CartScreen from '../screens/CartScreen'
+import CheckOutScreen from '../screens/CheckOutScreen'
 
 const CreateDrawer = createDrawerNavigator();
 export const DrawerNavigation = ({navigation}) => {
   return (
-    <CreateDrawer.Navigator drawerContent={() => <DrawerContent navigation={navigation}/>}>
+    <CreateDrawer.Navigator initialRouteName={"CartScreen"} drawerContent={() => <DrawerContent navigation={navigation}/>}>
       <CreateDrawer.Screen name="HomeScreen" component={HomeScreen} />
       <CreateDrawer.Screen name="DetailScreen" component={DetailScreen} />
       <CreateDrawer.Screen name="SearchScreen" component={SearchScreen} />
       <CreateDrawer.Screen name="ExploreCategory" component={ExploreCategory} />
       <CreateDrawer.Screen name="CartScreen" component={CartScreen} />
+      <CreateDrawer.Screen name="CheckOutScreen" component={CheckOutScreen} />
     </CreateDrawer.Navigator>
   );
 }

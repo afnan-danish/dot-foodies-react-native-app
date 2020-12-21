@@ -64,7 +64,9 @@ class DetailScreen extends React.Component {
     const user = firebase.auth().currentUser
     firebase.database().ref('users/' + user.uid).child('carts/'+this.state.id).update({
       quantity: this.state.quantity,
-      size: this.state.size
+      size: this.state.size,
+      date: new Date(),
+      price: this.state.salePrice,
     })
 
   }
