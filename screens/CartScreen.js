@@ -48,7 +48,7 @@ class CartScreen extends React.Component {
     
   }
   setLoading = (condition) => {
-    console.log(condition)
+    //console.log(condition)
     this.setState({isUpdateProduct: condition})
   }
   getTotal = () => {
@@ -60,10 +60,14 @@ class CartScreen extends React.Component {
     return total;
   }
   checkoutBtn = () => {
-    this.props.navigation.navigate("CheckOutScreen", {total: this.getTotal()})
+    this.props.navigation.navigate("CheckOutScreen", {
+      total: this.getTotal(),
+      type:"cart",
+      deliveryCharge:this.state.deliveryPrice,
+    })
   }
   render() {
-    console.log(this.state.data)
+    //console.log(this.state.data)
     const mylist = this.state.data.map(item=> {
       //console.log(item.url)
       return (
@@ -81,7 +85,7 @@ class CartScreen extends React.Component {
         this.state.data && this.state.data.length?
           <View style={{flex:1}}>
             <ScrollView contentContainerStyle={{paddingTop:20, paddingBottom: 50}}>
-              <View style={styles.qualityFood}>
+              <View style={styles.listFood}>
                 {mylist}
                 
               </View>
@@ -104,7 +108,6 @@ class CartScreen extends React.Component {
 function TotalComponent(props) {
   const { colors } = useTheme();
   //const contextType = ThemeContext;
-  console.log(colors)
   return (
     <View style={{flex:1, flexDirection: 'row', padding:15, flexWrap: 'wrap'}}>
       <Text style={{width:'50%', fontSize:16, fontWeight: 'bold', color:colors.text}}>Item Total </Text>
@@ -120,8 +123,6 @@ function TotalComponent(props) {
 }
 function EmptyCart(props) {
   const { colors } = useTheme();
-  //const contextType = ThemeContext;
-  console.log(colors)
   return (
   <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
     <Image source={require('../image/empty-cart.png')} style={{ width: 180, height: 150}} />
@@ -135,37 +136,13 @@ function EmptyCart(props) {
 export default CartScreen;
 
 const styles = StyleSheet.create({
-  qualityFood : {
+  listFood : {
     flexDirection: 'column',
     flexWrap: "wrap",
     paddingHorizontal:10,
     paddingRight:10,
     
   },
-  qFoodBox : {
-    width: 120,
-    height: 55,
-	  backgroundColor: '#f4511e',
-	  //clipPath: 'polygon(0 0, 95% 20%, 98% 24%, 100% 31%, 100% 100%, 0 100%)',
-    borderRadius: 10,
-    margin: 0,
-    position: 'relative',
-    marginRight:10,
-    flex: 1,
-    flexDirection: 'row',
-    alignItems:'center',
-    padding:5,
-  },
   
-  qFoodBoxImg : {
-    width: 45,
-    height: 45,
-    alignSelf: "flex-start",
-  },
-  qFoodBoxText : {
-    fontSize: 15,
-    color: '#fff',
-    textAlign:"right",
-    flex: 1,
-  }
+  
 });

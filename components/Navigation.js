@@ -35,6 +35,7 @@ const Navigation = () => {
       header: '#ffff',
       primary: "#f4511e",
       statusbar: '#f4511e',
+      accent: "#f4511e"
     }
   }
   
@@ -50,6 +51,7 @@ const Navigation = () => {
       card: "#12142f",
       primary: "#f4511e",
       statusbar: '#323a67',
+      accent: "#f4511e"
     }
   }
   const theme = isDarkTheme ? CustomDarkTheme : CustomDefaultTheme;

@@ -35,6 +35,7 @@ class DetailScreen extends React.Component {
       }
     });
     this.unsubscribe = this.props.navigation.addListener('focus', () => {
+      this.setState({quantity:1})
       const items = firebase.database().ref('products/').orderByChild("id").equalTo(this.props.route.params.id)       // .equalTo(this.props.route.params.id);
       //const items = firebase.database().ref('products/-MMpIds11dC43fghQdOI');
       items.on("value", dataSnapshot => {

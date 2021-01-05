@@ -6,7 +6,6 @@ import * as firebase from 'firebase';
 import { ActivityIndicator } from 'react-native-paper';
 import Header from '../components/Header'
 import SingleProduct from '../components/SingleProducts';
-import '@firebase/firestore';
 
 class ExploreCategory extends React.Component {
   state = {

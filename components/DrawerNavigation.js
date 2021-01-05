@@ -22,17 +22,21 @@ import SearchScreen from '../screens/SearchScreen'
 import ExploreCategory from '../screens/ExploreCategory'
 import CartScreen from '../screens/CartScreen'
 import CheckOutScreen from '../screens/CheckOutScreen'
+import PaymentScreen from '../screens/PaymentScreen'
+import OrderScreen from '../screens/OrderScreen'
 
 const CreateDrawer = createDrawerNavigator();
 export const DrawerNavigation = ({navigation}) => {
   return (
-    <CreateDrawer.Navigator initialRouteName={"CartScreen"} drawerContent={() => <DrawerContent navigation={navigation}/>}>
+    <CreateDrawer.Navigator drawerContent={() => <DrawerContent navigation={navigation}/>}>
       <CreateDrawer.Screen name="HomeScreen" component={HomeScreen} />
       <CreateDrawer.Screen name="DetailScreen" component={DetailScreen} />
       <CreateDrawer.Screen name="SearchScreen" component={SearchScreen} />
       <CreateDrawer.Screen name="ExploreCategory" component={ExploreCategory} />
       <CreateDrawer.Screen name="CartScreen" component={CartScreen} />
       <CreateDrawer.Screen name="CheckOutScreen" component={CheckOutScreen} />
+      <CreateDrawer.Screen name="PaymentScreen" component={PaymentScreen} />
+      <CreateDrawer.Screen name="OrderScreen" component={OrderScreen} />
     </CreateDrawer.Navigator>
   );
 }
@@ -102,7 +106,7 @@ const DrawerContent = (props) => {
                                 />
                             )}
                             label="Orders"
-                            onPress={() => {}}
+                            onPress={() => navigation.navigate("OrderScreen")}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
@@ -197,9 +201,9 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   bottomDrawerSection: {
-      marginBottom: 15,
-      borderTopColor: '#f4f4f4',
-      borderTopWidth: 1
+    marginBottom: 1,
+    borderTopColor: '#f4f4f4',
+    borderTopWidth: 1
   },
   preference: {
     flexDirection: 'row',
