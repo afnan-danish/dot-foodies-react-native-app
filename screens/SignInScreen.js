@@ -56,9 +56,10 @@ class SignUpScreen extends React.Component {
           value={this.state.password}
           onChangeText={(password) => this.setState({password:password}) }
           mode='outlined'
+          style={{marginTop: 15}}
         />
-        <Text style={{color:'#ff0000', fontWeight: 'bold', marginTop: 15,fontSize: 16 }}>{this.state.errorMessage}</Text>
-        <Button mode="contained" style={{backgroundColor: '#f4511e', marginTop:  20}} onPress={() => this.signInHandle()}>
+        <Text style={{color:'#ff0000', fontWeight: 'bold', marginTop: 5,fontSize: 16 }}>{this.state.errorMessage}</Text>
+        <Button mode="contained" style={{backgroundColor: '#f4511e', marginTop:  15}} onPress={() => this.signInHandle()}>
           SIGN IN
         </Button>
 

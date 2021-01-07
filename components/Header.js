@@ -37,9 +37,11 @@ class Header extends React.Component {
           
           <CartCount colors={colors} {...this.props} />        
           
-          <Appbar.Action icon={this.state.isSearchOpen? "close" : "magnify" }
-            onPress={()=> this.state.isSearchOpen? this.setState({isSearchOpen: false}) : this.setState({isSearchOpen: true}) }
-          />
+          {this.props.hideSearch?<View style={{marginRight:15}}></View>:
+            <Appbar.Action icon={this.state.isSearchOpen? "close" : "magnify" }
+              onPress={()=> this.state.isSearchOpen? this.setState({isSearchOpen: false}) : this.setState({isSearchOpen: true}) }
+            />
+          }
         </Appbar.Header>
         
         <Searchbar style={this.state.isSearchOpen? styles.searchBar : {display:'none'} }
@@ -52,6 +54,7 @@ class Header extends React.Component {
           onSubmitEditing={()=>  this.props.navigation.navigate('SearchScreen', {key: this.state.searchKey})}
           //onBlur={()=> this.setState({isSearchOpen: false})}
         />
+        
       </SafeAreaView>
     );
   }

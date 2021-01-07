@@ -57,8 +57,14 @@ class SingleProduct extends React.Component {
       <View style={[styles.products, {backgroundColor:colors.header}, this.props.width!=null?{width:this.props.width}:null]}>
         {this.state.isLoading?<ActivityIndicator size='small' style={{paddingVertical: 100}} />:
         <View>
-          <Text style={{textAlign:'center',color: colors.text, fontSize:18, fontWeight: 'bold'}}>{this.state.name}</Text>
-          <Text style={{color: '#a0a0a0',fontSize:12, textAlign: 'center', }}>{this.state.desc}</Text>
+          <TouchableOpacity onPress={() => 
+              this.props.navigation.navigate('DetailScreen', {id: this.state.id})
+            } 
+          >
+            <Text style={{textAlign:'center',color: colors.text, fontSize:18, fontWeight: 'bold'}}>{this.state.name}</Text>
+            <Text style={{color: '#a0a0a0',fontSize:12, textAlign: 'center', }}>{this.state.desc}</Text>
+          </TouchableOpacity>
+          
           <View style={{alignItems: 'center',paddingVertical: 15}}>
             <Image source={{uri :this.state.imguri}} style={{ width: 120, height: 120}} />
           </View>

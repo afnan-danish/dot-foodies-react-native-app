@@ -84,7 +84,7 @@ class DetailScreen extends React.Component {
               <Text style={{fontSize: 25, fontWeight: 'bold', color: colors.text, marginTop: 20}}>{this.state.name}</Text>
               <Text style={{color: '#a0a0a0', fontSize: 15, marginTop: 8}}>{this.state.desc}</Text>
               <Image source={{uri : this.state.imguri}} style={{ width: 250, height: 250, marginVertical: 30 }} />
-              <Text style={{color: '#f4511e', fontSize: 22}}>Rs <Text style={{fontSize: 35,  color: colors.text, fontWeight: 'bold', }}>{this.state.price[this.state.size]}</Text></Text>
+              <Text style={{color: '#f4511e', fontSize: 22}}>Rs <Text style={{fontSize: 35,  color: colors.text, fontWeight: 'bold', }}>{this.state.salePrice}</Text></Text>
             </View>
             
             <View>

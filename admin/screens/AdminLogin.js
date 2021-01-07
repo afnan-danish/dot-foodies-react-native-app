@@ -46,6 +46,7 @@ class AdminLogin extends React.Component {
           value={this.state.password}
           onChangeText={(password) => this.setState({password:password}) }
           mode='outlined'
+          style={{marginTop: 15}}
         />
         <Button mode="contained" style={{backgroundColor: '#f4511e', marginTop:  20}} onPress={() => this.signInFunction()}>
 					SIGN IN

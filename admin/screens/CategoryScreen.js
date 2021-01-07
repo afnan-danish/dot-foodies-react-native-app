@@ -46,7 +46,7 @@ class CategoryScreen extends React.Component {
   }
   uploadImage = async() => {
     if(this.isValidate()){
-      /*
+      
       this.setState({addCatLoader:true})
       const image = this.state.catImgUrl
       //const user = this.getCurrentUser();
@@ -65,7 +65,7 @@ class CategoryScreen extends React.Component {
           this.setState({addCatLoader:false})
         })
       });
-      */
+      /*
      const uri = this.state.catImgUrl;
      const filename = 'category/'+Date.now().toString()
      const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
@@ -92,7 +92,7 @@ class CategoryScreen extends React.Component {
        'Photo uploaded!',
        'Your photo has been uploaded to Firebase Cloud Storage!'
      );
-
+      */
 
 
 
@@ -215,7 +215,7 @@ class CategoryScreen extends React.Component {
               onPress={() => this.state.isUpdate?this.updateImage():this.uploadImage()}>
               {this.state.addCatLoader?"Please wait...": this.state.isUpdate?"Update Category":"Add Category"}
             </Button>
-            <Text>{this.state.catImgUrl}</Text>
+            {/*<Text>{this.state.catImgUrl}</Text>*/}
           </View>
           <View>
             {this.state.listLoader?

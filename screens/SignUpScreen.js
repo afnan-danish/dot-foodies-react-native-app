@@ -32,7 +32,7 @@ class SignUpScreen extends React.Component {
   }
   render() {
     return (
-      <View style={{paddingTop: 150, paddingHorizontal: 30}}>
+      <View style={{paddingTop: 50, paddingHorizontal: 30}}>
         <Text style={{textAlign: 'center', fontSize: 25, marginBottom: 20}}>Sign In</Text>
         <TextInput
           label="Full Name"
@@ -45,6 +45,7 @@ class SignUpScreen extends React.Component {
           value={this.state.email}
           onChangeText={(email) => this.setState({email:email}) }
           mode='outlined'
+          style={{marginTop: 15}}
         />
         <TextInput
           secureTextEntry={true}
@@ -52,6 +53,7 @@ class SignUpScreen extends React.Component {
           value={this.state.password}
           onChangeText={(password) => this.setState({password:password}) }
           mode='outlined'
+          style={{marginTop: 15}}
         />
         <TextInput
           secureTextEntry={true}
@@ -59,6 +61,7 @@ class SignUpScreen extends React.Component {
           value={this.state.confirmPassword}
           onChangeText={(confirmPassword) => this.setState({confirmPassword:confirmPassword}) }
           mode='outlined'
+          style={{marginTop: 15}}
         />
         <Button icon="cart" mode="contained" style={{backgroundColor: '#f4511e', marginTop:  20}} onPress={() => this.signUpHandle(this.state.fullname, this.state.email, this.state.password, this.state.confirmPassword)}>
 					SIGN IN

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Food",
-    "slug": "Food",
+    "name": "Dot Foodies",
+    "slug": "DotFoodies",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

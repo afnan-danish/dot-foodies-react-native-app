@@ -14,7 +14,8 @@ import {
   TouchableRipple,
   Switch,
 } from 'react-native-paper';
-import{ AuthContext } from '../components/Context';
+import { AuthContext } from '../components/Context';
+import DisplayUserInfo from '../components/DisplayUserInfo';
 
 import HomeScreen from '../screens/HomeScreen'
 import DetailScreen from '../screens/DetailScreen';
@@ -24,6 +25,7 @@ import CartScreen from '../screens/CartScreen'
 import CheckOutScreen from '../screens/CheckOutScreen'
 import PaymentScreen from '../screens/PaymentScreen'
 import OrderScreen from '../screens/OrderScreen'
+import MenuScreen from '../screens/MenuScreen'
 
 const CreateDrawer = createDrawerNavigator();
 export const DrawerNavigation = ({navigation}) => {
@@ -37,6 +39,7 @@ export const DrawerNavigation = ({navigation}) => {
       <CreateDrawer.Screen name="CheckOutScreen" component={CheckOutScreen} />
       <CreateDrawer.Screen name="PaymentScreen" component={PaymentScreen} />
       <CreateDrawer.Screen name="OrderScreen" component={OrderScreen} />
+      <CreateDrawer.Screen name="MenuScreen" component={MenuScreen} />
     </CreateDrawer.Navigator>
   );
 }
@@ -55,23 +58,7 @@ const DrawerContent = (props) => {
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
-                        <View style={{flexDirection:'row',marginTop: 15}}>
-                            {/*
-                            <Avatar.Image 
-                                source={{
-                                    uri: 'https://api.adorable.io/avatars/50/abott@adorable.png'
-                                }}
-                                size={50}
-                              /> */}
-                            <Avatar.Text 
-                                label="AD"
-                                size={50}
-                            />
-                            <View style={{marginLeft:15, flexDirection:'column'}}>
-                                <Title style={styles.title}>Afnan Danish</Title>
-                                {/*<Caption style={styles.caption}>@j_doe</Caption>*/}
-                            </View>
-                        </View>
+                        <DisplayUserInfo />
                     </View>
 
                     <Drawer.Section style={styles.drawerSection}>
@@ -117,7 +104,7 @@ const DrawerContent = (props) => {
                                 />
                             )}
                             label="Menu"
-                            onPress={() => {}}
+                            onPress={() => navigation.navigate("MenuScreen")}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
@@ -128,8 +115,9 @@ const DrawerContent = (props) => {
                                 />
                             )}
                             label="Todays Deals & Offer"
-                            onPress={() => {}}
+                            onPress={() => navigation.navigate("MenuScreen")}
                         />
+                        {/*}
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <MaterialCommunityIcons 
@@ -140,7 +128,7 @@ const DrawerContent = (props) => {
                             )}
                             label="My Favourite"
                             onPress={() => {}}
-                        />
+                            />*/}
                     </Drawer.Section>
                     <Drawer.Section title="Preferences">
                         <TouchableRipple onPress={() => {toggleTheme(paperTheme.dark)}}>
