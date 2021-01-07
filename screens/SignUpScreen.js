@@ -63,8 +63,8 @@ class SignUpScreen extends React.Component {
           mode='outlined'
           style={{marginTop: 15}}
         />
-        <Button icon="cart" mode="contained" style={{backgroundColor: '#f4511e', marginTop:  20}} onPress={() => this.signUpHandle(this.state.fullname, this.state.email, this.state.password, this.state.confirmPassword)}>
-					SIGN IN
+        <Button mode="contained" style={{backgroundColor: '#f4511e', marginTop:  20}} onPress={() => this.signUpHandle(this.state.fullname, this.state.email, this.state.password, this.state.confirmPassword)}>
+					SIGN UP
         </Button>
 
         <Text style={{marginTop: 30, textAlign: 'center', fontSize: 16 }}>Have an account? 
