@@ -5,6 +5,10 @@
 I'm trying to understand the best way to build React Native apps. 
 
 
+
+### Screenshots
+
+
 <img align="left" alt="Splash" width="250px" src="./screenshots/01-Splash.jpg" />
 <img align="left" alt="Sign In" width="250px" src="./screenshots/02-Sign-in.jpg" />
 <img align="left" alt="Sign Up" width="250px" src="./screenshots/03-Sign-up.jpg" />
