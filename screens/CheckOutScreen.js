@@ -93,7 +93,7 @@ class CartScreen extends React.Component {
     
   }
   continue = () => {
-    if(!this.validate()) {
+    if(this.validate()) {
       //console.log("Submit")
       firebase.database().ref('users/' + this.context.uid).child('details/').set({
         city: this.state.city,
