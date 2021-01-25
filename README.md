@@ -60,6 +60,3 @@ In the `server` directory
 
 
 
-## License
-
-MIT
